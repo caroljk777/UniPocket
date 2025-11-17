@@ -25,6 +25,28 @@ model User {
   @@map("users")
 }
 
-model Universidades {
-  //ver oq a universade precisa 
+model Universidade {
+  Id       String @id @default(cuid())
+  Name     String
+  Location String
+  ZipCode  String
+  Phone    String
+  Email    String @unique
+
+  Alunos Aluno[] // Uma universidade tem vários alunos
+}
+
+model Aluno {
+  Id         String   @id @default(cuid())
+  Name       String
+  Email      String   @unique
+  Phone      String
+  Address    String
+  CreatedAt  DateTime @default(now())
+  UpdatedAt  DateTime @updatedAt
+  birthDate  DateTime
+  SchoolYear String
+
+  UniversidadeId String
+  universidade   Universidade @relation(fields: [UniversidadeId], references: [Id])
 }
